@@ -18,7 +18,7 @@ $setterm -powersave off > /dev/null 2>&1`;
 `$sync;$sync;$sync`;
 
 // put up the loading images screen and give convertengine some time to process the first picture
-`$xview -border $background -display localhost:0.0 -fork -fullscreen -normalize "/tmp/loading.png" > /dev/null 2>&1 &`;
+`$xview -display localhost:0.0 -fork -fullscreen -normalize "/tmp/loading.png" > /dev/null 2>&1 &`;
 sleep($waittime);
 
 // continue indefinitely
@@ -30,7 +30,7 @@ while( true ) {
     $image = "$destination/$image";
     
     // load new image to be displayed, and fork the process
-    `$xview -border $background -display localhost:0.0 -fork -fullscreen -normalize "$image" > /dev/null 2>&1 &`;
+    `$xview -display localhost:0.0 -fork -fullscreen -normalize "$image" > /dev/null 2>&1 &`;
     sleep($waittime);
     
     // remove "stale" images (not currently being displayed)

@@ -3,24 +3,47 @@
 // If you are not using the installer, be sure to 
 // disable the php execution time limit!
 
+
+//-------------------------------------------------
+// Basics -  You should verify/set these!
+//-------------------------------------------------
 // the geometry to use (should be your X resolution)
 $geometry = "1024x768";
-// location of your original images
-$source = "/usr/local/originals";
-// location of the modified images (seperate directory please!)
-$destination = "/usr/local/images";
-// Seconds to wait between pictures being displayed
-$waittime = "5";
-// How long to wait after finishing conversation to check for new pictures
-$throttle = "10";
 // The background color (this should be the matte color of your frame)
 $background = "black";
-// The text color (for the 'loading images...' text & future use)
-$text = "white";
+
+//-------------------------------------------------
+// Speed -  How fast will things change?
+//-------------------------------------------------
+// Seconds to wait between pictures being displayed
+$waittime = "5";
+// How long to wait after finishing conversion to check for new pictures
+$throttle = "10";
+
+//-------------------------------------------------
+// Text -  Fancypants text options.
+//-------------------------------------------------
+// The text color to use
+$textcolor = "white";
+// Show filenames with pictures?      (true OR false)
+//   Note: if this is turned off (false), options below do not apply
+$showtext = true;
+// Where to vertically position text
+//   "north" = top, "south" = bottom
+$textpos = "south";
+// Where to align text
+//   "west = left, "east" = right, "" = center
+$textalign = "west";
+// What font size to use?
+$textsize = 14;
 
 //-------------------------------------------------
 // You shouldn't need to change anything below here
 //-------------------------------------------------
+// location of your original images
+$source = "/usr/local/originals";
+// location of the modified images (seperate directory please!)
+$destination = "/usr/local/images";
 // conversion program to use
 $convert = "/usr/bin/convert";
 $composite = "/usr/bin/composite";

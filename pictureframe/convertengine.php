@@ -6,12 +6,14 @@
 // load configuration settings
 require_once("/etc/pictureframe/config.php");
 
-// re-render the loading screen on inital start (as resolution can change)
-`$convert xc:$background -resize $geometry! -fill $text -pointsize 24 -gravity center -draw "text 0,0 'Loading images...'" /tmp/loading.png`;
-
 // stay running indefinity in the background
 while( true ) {
-  // (re)load the originals, and clean cache if neccessary
+  // grab config.php datestamp and refresh background image
+  $timestamp = filemtime("/etc/pictureframe/config.php");
+  // re-render the loading screen in case of config.php changes
+  `$convert xc:$background -resize $geometry! -fill $textcolor -pointsize 20 -font helvetica -gravity center -draw "text 0,0 'Loading images...'" /tmp/loading.png > /dev/null 2>&1`;
+  
+  // (re)load the originals, and clean cache of original pictures removed
   loadImages($images,$source);
   cleanCache($images);
 
@@ -19,12 +21,18 @@ while( true ) {
   foreach( $images as $image ) {
     // figure out the destination name
     $modified = $destination . "/" . $image;
-    // if the image has not been converted (and is not blank)
-    if( !file_exists("$modified") ) {
+    // if the image has not been converted or the converted image needs updating due to new config.php
+    if( !file_exists("$modified") || (file_exists("$modified") && (filemtime("$modified") < $timestamp)) ) {
       // assemble the full path to the files
       $original = $source . "/" . $image;
+
       // resize the image
-      `$convert -interlace NONE -geometry $geometry "$original" - | $composite -gravity center - -compose Over /tmp/loading.png "$modified"`;
+      `$convert -interlace NONE -geometry $geometry "$original" "-" | $composite -gravity center "-" -compose Over /tmp/loading.png "$modified" > /dev/null 2>&1`;
+      
+      // if fancypants options are turned on, re-process and insert text
+      if( $showtext ) {
+        `$convert "$modified" -font helvetica -pointsize $textsize -fill $textcolor -gravity $textpos$textalign -annotate 0 '$image' "$modified" > /dev/null 2>&1`;
+      }
     }
   }
   // wait before refreshing the pictures again
