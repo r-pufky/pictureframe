@@ -1,13 +1,14 @@
 <?
 // Copyright 2002 - Robert M. Pufky
-// be sure to disable php execution time limit!
+// If you are not using the installer, be sure to 
+// disable the php execution time limit!
 
+// the geometry to use (should be your X resolution)
+$geometry = "1024x768";
 // location of your original images
 $source = "/usr/local/originals";
 // location of the modified images (seperate directory please!)
 $destination = "/usr/local/images";
-// the geometry to use (should be your X resolution)
-$geometry = "1024x768";
 // Seconds to wait between pictures being displayed
 $waittime = "5";
 // How long to wait after finishing conversation to check for new pictures
