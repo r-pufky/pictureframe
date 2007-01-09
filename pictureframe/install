@@ -55,4 +55,20 @@ echo -e -n "Configuring pictureframe service: "
 `update-rc.d -f pictureframe start 99 2 . stop 99 1 3 4 5 6 S . 2>&1 > /dev/null`
 echo "done."
 
+# Configure 'picture' user and prompt for password
+echo -e -n "Configuring 'picture' user: "
+if [ ! -d /home/picture ]; then
+  echo -e -n "\n'picture' user not found!  -- Creating NEW 'picture' user:\n\n"
+  adduser picture
+else
+  echo -e -n "'picture' user already exists! "
+fi
+echo "done."
+
+# Link to pictures directory
+echo -e -n "Verifying link to pictures directory: "
+if [ ! -d /home/picture/pictures ]; then
+  `ln -sf /usr/local/originals /home/picture/pictures`
+fi
+echo "done."
 echo -e "\nDone!  Please verify configuration before rebooting!\n"
