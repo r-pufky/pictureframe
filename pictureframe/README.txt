@@ -18,6 +18,14 @@ to them.  You have been warned!!
 
 Installation:
 -------------
+1) Download, burn, and do a basic installation of Debian.  This iso can be
+   downloaded and burnt from any common burning software:
+
+   http://cdimage.debian.org/debian-cd/3.1_r4/i386/iso-cd/debian-31r4-i386-netinst.iso
+
+   During the installation, when prompted to install "standard software", SKIP
+   this step.
+
 1) Run the X-windows setup script.  The defaults for X-windows are fine for
    99% of all users.  Pay attention to the video resolution, and pick the one
    that best fits your needs.  Note: it can take a very long time to run 
