@@ -15,7 +15,6 @@ frame_start() {
   # remove the mouse cursor from the screen
   echo -e -n "Starting display engine... ";
   /usr/bin/X11/xinit /usr/bin/unclutter -idle .5 -root > /dev/null 2>&1 &
-  sleep 5;
   displayengine.php &
   echo "done."
 }

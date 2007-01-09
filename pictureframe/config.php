@@ -13,6 +13,10 @@ $destination = "/usr/local/images";
 $waittime = "5";
 // How long to wait after finishing conversation to check for new pictures
 $throttle = "10";
+// The background color (this should be the matte color of your frame)
+$background = "black";
+// The text color (for the 'loading images...' text & future use)
+$text = "white";
 
 //-------------------------------------------------
 // You shouldn't need to change anything below here
