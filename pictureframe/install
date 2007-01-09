@@ -13,10 +13,10 @@ if [ ! -d /etc/pictureframe ]; then
   `mkdir /etc/pictureframe 2>&1 > /dev/null`
 fi
 if [ ! -d /usr/local/images ]; then
-  `/bin/mkdir /usr/local/images 2>&1 > /dev/null`
+  `mkdir /usr/local/images 2>&1 > /dev/null`
 fi
 if [ ! -d /usr/local/originals ]; then
-  `/bin/mkdir /usr/local/originals 2>&1 > /dev/null`
+  `mkdir /usr/local/originals 2>&1 > /dev/null`
 fi
 echo "done."
 
@@ -32,27 +32,27 @@ echo "done."
 
 # Install required packages
 echo -e -n "Upgrading system to latest patches: "
-#`apt-get -qq update; apt-get -qq upgrade`
+`apt-get -qq update 2>&1 > /dev/null; apt-get -qq upgrade 2>&1 > /dev/null`
 echo "done."
 echo -e -n "Installing packages required for pictureframe: "
-#`apt-get -qq install php4-cli xloadimage imagemagick unclutter`
+`apt-get -qq install php4-cli xloadimage imagemagick unclutter 2>&1 > /dev/null`
 echo "done."
 echo -e -n "Disabling common X display managers: "
-#`update-rc.d -f xdm remove 2>&1 > /dev/null`
-#`update-rc.d -f gdm remove 2>&1 > /dev/null`
-#`update-rc.d -f kdm remove 2>&1 > /dev/null`
+`update-rc.d -f xdm remove 2>&1 > /dev/null`
+`update-rc.d -f gdm remove 2>&1 > /dev/null`
+`update-rc.d -f kdm remove 2>&1 > /dev/null`
 echo "done."
 
-# Configure php4-cli
+# Configure php4-cli (and make backup file)
 echo -e -n "Configuring php cli for pictureframe: "
-#`cp -f /etc/php4/cli/php.ini /etc/php4/cli/php.ini.bak 2>&1 > /dev/null`
-#`sed s/max_execution_time\ =\ 30/max_execution_time\ =\ 0/g /etc/php4/cli/php.ini | sed s/memory_limit\ =\ 8M/memory_limit\ =\ 100M/g > /etc/php4/cli/php.ini 2>&1 > /dev/null`
+`sed -i.bak "s/max_execution_time\ =\ 30/max_execution_time\ =\ 0/g" /etc/php4/cli/php.ini`
+`sed -i "s/memory_limit\ =\ 8M/memory_limit\ =\ 100M/g" /etc/php4/cli/php.ini`
 echo "done."
 
 # Configure pictureframe to startup as a service
 echo -e -n "Configuring pictureframe service: "
-#`update-rc.d pictureframe stop 99 1 3 4 5 6 S . 2>&1 > /dev/null`
-#`ln -sf /etc/init.d/pictureframe /etc/init.d/rc2.d/S99pictureframe 2>&1 > /dev/null`
+`update-rc.d -f picturefram remove 2>&1 > /dev/null`
+`update-rc.d -f pictureframe start 99 2 . stop 99 1 3 4 5 6 S . 2>&1 > /dev/null`
 echo "done."
 
 echo -e "\nDone!  Please verify configuration before rebooting!\n"
