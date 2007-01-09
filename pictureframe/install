@@ -1,0 +1,51 @@
+#!/bin/sh
+# Copyright 2002 - Robert M. Pufky
+# Configuration script for pictureframe
+
+# Verify we are running as root and can install things
+if[ `whoami` != "root" ];
+  echo "Error: script must be run from root or sudo"
+fi
+
+# Setup installation directories
+echo -e -n "Setting up installation directories "
+`mkdir /etc/pictureframe /usr/local/images /usr/local/originals`
+`chmod o+w /usr/local/originals`
+echo "done."
+
+# Copy configuration files to install directories
+echo -e -n "Setting up pictureframe files "
+`cp -f config.php /etc/pictureframe/; cp -f convertengine.php /usr/local/bin/; cp -f displayengine.php /usr/local/bin/; cp -f pictureframe /etc/init.d/`
+echo "done."
+
+# Verify permissions
+echo -e -b "Verifying file permissions "
+`chmod 644 /etc/pictureframe/config.php; chmod 755 /usr/local/bin/*; chmod 755 /etc/init.d/pictureframe`
+echo "done."
+
+# Install required packages
+echo -e -n "Upgrading system to latest patches "
+`apt-get -qq update; apt-get -qq upgrade`
+echo "done."
+echo -e -n "Installing packages required for pictureframe "
+`apt-get -qq install php4-cli xloadimage imagemagick unclutter`
+echo "done."
+echo -e -n "Disabling common X display managers "
+`update-rc.d -f xdm remove`
+`update-rc.d -f gdm remove`
+`update-rc.d -f kdm remove`
+echo "done."
+
+# Configure php4-cli
+echo -e -n "Configuring php cli for pictureframe "
+`cp -f /etc/php4/cli/php.ini /etc/php4/cli/php.ini.bak`
+`sed s/max_execution_time\ =\ 30/max_execution_time\ =\ 0/g /etc/php4/cli/php.ini | sed s/memory_limit\ =\ 8M/memory_limit\ =\ 100M/g > /etc/php4/cli/php.ini`
+echo "done."
+
+# Configure picturefram to startup as a service
+echo -e -n "Configuring pictureframe service "
+`update-rc.d pictureframe stop 99 1 3 4 5 6 S .`
+`ln -sf /etc/init.d/pictureframe /etc/init.d/rc2.d/S99pictureframe`
+echo "done."
+
+echo -e "\nDone!  Please verify configuration before rebooting!\n"

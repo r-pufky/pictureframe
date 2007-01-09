@@ -1,4 +1,0 @@
-#!/bin/sh
-killall --quiet dillo
-export DISPLAY=:0.0
-/usr/local/bin/dillo http://jack.cob.rit.edu/whereists.php?test > /dev/null &
