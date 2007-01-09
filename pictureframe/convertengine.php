@@ -6,8 +6,8 @@
 // load configuration settings
 require_once("/etc/pictureframe/config.php");
 
-// re-render the loading screen per run (as resolution can change)
-`$convert xc:$background -resize 1024x768! -fill $text -pointsize 24 -gravity center -draw "text 0,0 'Loading images...'" /tmp/loading.png`;
+// re-render the loading screen on inital start (as resolution can change)
+`$convert xc:$background -resize $geometry! -fill $text -pointsize 24 -gravity center -draw "text 0,0 'Loading images...'" /tmp/loading.png`;
 
 // stay running indefinity in the background
 while( true ) {
@@ -24,7 +24,7 @@ while( true ) {
       // assemble the full path to the files
       $original = $source . "/" . $image;
       // resize the image
-      `$convert -interlace NONE -geometry $geometry "$original" "$modified"`;
+      `$convert -interlace NONE -geometry $geometry "$original" - | $composite -gravity center - -compose Over /tmp/loading.png "$modified"`;
     }
   }
   // wait before refreshing the pictures again

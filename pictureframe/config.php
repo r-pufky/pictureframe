@@ -23,6 +23,7 @@ $text = "white";
 //-------------------------------------------------
 // conversion program to use
 $convert = "/usr/bin/convert";
+$composite = "/usr/bin/composite";
 
 // Locations of binaries, as we are not operating in a shell
 $setterm = "/usr/bin/setterm";
