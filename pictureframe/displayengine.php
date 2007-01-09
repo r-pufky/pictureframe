@@ -17,6 +17,9 @@ $setterm -powersave off > /dev/null 2>&1`;
 // this will let us just unplug it without worry
 `$sync;$sync;$sync`;
 
+// put up the loading images screen
+`$xview -border black -display localhost:0.0 -fork -fullscreen -normalize "/tmp/loading.png" > /dev/null 2>&1 &`;
+
 // continue indefinitely
 while( true ) {
   loadImages($images,$destination);

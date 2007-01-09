@@ -6,6 +6,9 @@
 // load configuration settings
 require_once("/etc/pictureframe/config.php");
 
+// re-render the loading screen per run (as resolution can change)
+`$convert -blackground black -fill lightgray -font helvetica -pointsize 24 -size $geometry -gravity center caption:'Loading images...' /tmp/loading.png`;
+
 // stay running indefinity in the background
 while( true ) {
   // (re)load the originals, and clean cache if neccessary
