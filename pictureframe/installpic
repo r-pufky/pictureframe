@@ -10,37 +10,38 @@ fi
 # Setup installation directories
 echo -e -n "Setting up installation directories: "
 if [ ! -d /etc/pictureframe ]; then
-  `mkdir /etc/pictureframe 2>&1 > /dev/null`
+  `mkdir /etc/pictureframe > /dev/null 2>&1`
 fi
 if [ ! -d /usr/local/images ]; then
-  `mkdir /usr/local/images 2>&1 > /dev/null`
+  `mkdir /usr/local/images > /dev/null 2>&1`
 fi
 if [ ! -d /usr/local/originals ]; then
-  `mkdir /usr/local/originals 2>&1 > /dev/null`
+  `mkdir /usr/local/originals > /dev/null 2>&1`
 fi
 echo "done."
 
 # Copy configuration files to install directories
 echo -e -n "Setting up pictureframe files: "
-`cp -f config.php /etc/pictureframe/ 2>&1 > /dev/null; cp -f convertengine.php /usr/local/bin/ 2>&1 > /dev/null; cp -f displayengine.php /usr/local/bin/ 2>&1 > /dev/null; cp -f pictureframe /etc/init.d/ 2>&1 > /dev/null`
+`cp -f config.php /etc/pictureframe/ > /dev/null 2>&1; cp -f convertengine.php /usr/local/bin/ > /dev/null 2>&1; cp -f displayengine.php /usr/local/bin/ > /dev/null 2>&1; cp -f pictureframe /etc/init.d/ > /dev/null 2>&1`
 echo "done."
 
 # Verify permissions
 echo -e -n "Verifying file permissions: "
-`chmod 644 /etc/pictureframe/config.php 2>&1 > /dev/null; chmod 755 /usr/local/bin/* 2>&1 > /dev/null; chmod 755 /etc/init.d/pictureframe 2>&1 > /dev/null; chmod o+w /usr/local/originals 2>&1 > /dev/null`
+`chmod 644 /etc/pictureframe/config.php > /dev/null 2>&1; chmod 755 /usr/local/bin/* > /dev/null 2>&1; chmod 755 /etc/init.d/pictureframe > /dev/null 2>&1; chmod o+w /usr/local/originals > /dev/null 2>&1`
 echo "done."
 
 # Install required packages
 echo -e -n "Upgrading system to latest patches: "
-`apt-get -qq update 2>&1 > /dev/null; apt-get -qq upgrade 2>&1 > /dev/null`
+`apt-get -y update; apt-get -y upgrade`
 echo "done."
 echo -e -n "Installing packages required for pictureframe: "
-`apt-get -qq install php4-cli xloadimage imagemagick unclutter 2>&1 > /dev/null`
-echo "done."
+`apt-get -y install php4-cli xloadimage imagemagick unclutter`
+clear
+echo "Upgrading system to latest patches: done."
 echo -e -n "Disabling common X display managers: "
-`update-rc.d -f xdm remove 2>&1 > /dev/null`
-`update-rc.d -f gdm remove 2>&1 > /dev/null`
-`update-rc.d -f kdm remove 2>&1 > /dev/null`
+`rm -f /etc/rc?.d/???xdm > /dev/null 2>&1`
+`rm -f /etc/rc?.d/???gdm > /dev/null 2>&1`
+`rm -f /etc/rc?.d/???kdm > /dev/null 2>&1`
 echo "done."
 
 # Configure php4-cli (and make backup file)
@@ -51,8 +52,8 @@ echo "done."
 
 # Configure pictureframe to startup as a service
 echo -e -n "Configuring pictureframe service: "
-`update-rc.d -f picturefram remove 2>&1 > /dev/null`
-`update-rc.d -f pictureframe start 99 2 . stop 99 1 3 4 5 6 S . 2>&1 > /dev/null`
+`rm -f /etc/rc?.d/???pictureframe > /dev/null 2>&1`
+`update-rc.d -f pictureframe start 99 2 . stop 99 1 3 4 5 6 S . > /dev/null 2>&1`
 echo "done."
 
 # Configure 'picture' user and prompt for password
@@ -68,7 +69,7 @@ echo "done."
 # Link to pictures directory
 echo -e -n "Verifying link to pictures directory: "
 if [ ! -d /home/picture/pictures ]; then
-  `ln -sf /usr/local/originals /home/picture/pictures`
+  `ln -sf /usr/local/originals /home/picture/pictures > /dev/null 2>&1`
 fi
 echo "done."
 echo -e "\nDone!  Please verify configuration before rebooting!\n"

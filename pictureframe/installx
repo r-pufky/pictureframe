@@ -1,0 +1,46 @@
+#!/bin/sh
+# Copyright 2002 - Robert M. Pufky
+# Configuration script for pictureframe
+
+# Verify we are running as root and can install things
+if [ `whoami` != "root" ]; then
+  echo "Error: script must be run from root account or sudo"
+fi
+
+# Update, upgrade system
+clear
+echo -e -n "Updating system...
+\n\nThis will automatically update and patch your system
+to the latest files before installing X-windows.  This
+may take some time to complete.
+\n\nPlease Note: you can safely dis-reguard the 'Reboot now'
+prompt.  This is due to a kernel upgrade (and we will be 
+rebooting MANUALLY in a few minutes anyways).
+\n\nPress any key to continue, ctrl-c to quit"
+read
+`apt-get -y update; apt-get -y upgrade`
+echo "done."
+
+# Install X-windows
+clear
+echo -e -n "Installing X-windows...
+\n\nThis step will download approximately 45 megs of files
+to install X-windows.  Time waiting for these files WILL
+vary based on your connection speeds.  Typically it is 
+about 5-10 minutes to download with reasonable (200-400kps)
+speeds.
+\n\nDuring the X-windows configuration, you should set the
+correct resolution of your display; otherwise, default
+values are fine.
+\n\nPress any key to continue, ctrl-c to quit"
+read
+`apt-get -y install xserver-xfree86 xfonts-100dpi xfonts-75dpi xfonts-base x-window-system gs gs-common gsfonts gsfonts-x11`
+clear
+echo "X-windows installed."
+
+# clean up installation (remove xdm which is auto-installed)
+echo -e -n "Tidying up X-windows installation: "
+`rm -f /etc/rc?.d/???xdm > /dev/null 2>&1`
+echo "done."
+
+echo "Done!  X-windows installed."
