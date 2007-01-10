@@ -1,0 +1,55 @@
+#!/bin/sh
+# Copyright 2002 - Robert M. Pufky
+# Daemon script for picture frame
+
+# starts the picture frame and all related services
+frame_start() {
+  # export paths and local display for use
+  export PATH=/bin:/usr/local/bin:/usr/X11R6/bin:/etc/X11
+  export DISPLAY="localhost:0.0"
+
+  # initalize converting engine / clean up old pictures
+  echo -e -n "Starting convert engine... "
+  convertengine.php &
+  echo "done."
+  # remove the mouse cursor from the screen
+  echo -e -n "Starting display engine... ";
+  /usr/bin/X11/xinit /usr/bin/unclutter -idle .5 -root > /dev/null 2>&1 &
+  displayengine.php &
+  echo "done."
+}
+
+# stop the picture frame and all relate services
+frame_stop() {
+  echo -e -n "Stopping display engine... ";
+  kill -9 `pgrep displayengine` > /dev/null 2>&1
+  kill -9 `pgrep xinit` > /dev/null 2>&1
+  kill -9 `pgrep unclutter` > /dev/null 2>&1
+  kill -9 `pgrep [x]view` > /dev/null 2>&1
+  kill -9 `pgrep X` > /dev/null 2>&1
+echo "done.";
+  echo -e -n "Stopping conversion engine... ";
+  kill -9 `pgrep displayengine` > /dev/null 2>&1
+  kill -9 `pgrep convert` > /dev/null 2>&1
+  echo "done."
+}
+
+case "$1" in
+  start)
+    frame_start
+  ;;
+  stop)
+    frame_stop
+  ;;
+  restart|reload|force-reload)
+    frame_stop
+    sleep 2
+    frame_start
+  ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|reload|force-reload}"
+    exit 1
+  ;;
+esac
+
+exit 0
