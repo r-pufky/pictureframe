@@ -18,7 +18,7 @@ prompt.  This is due to a kernel upgrade (and we will be
 rebooting MANUALLY in a few minutes anyways).
 \n\nPress any key to continue, ctrl-c to quit"
 read
-`apt-get -y update; apt-get -y upgrade`
+apt-get -y update; apt-get -y upgrade
 echo "done."
 
 # Install X-windows
@@ -34,7 +34,7 @@ correct resolution of your display; otherwise, default
 values are fine.
 \n\nPress any key to continue, ctrl-c to quit"
 read
-`apt-get -y install xserver-xfree86 xfonts-100dpi xfonts-75dpi xfonts-base x-window-system gs gs-common gsfonts gsfonts-x11`
+apt-get -y install xserver-xfree86 xfonts-100dpi xfonts-75dpi xfonts-base x-window-system gs gs-common gsfonts gsfonts-x11
 clear
 echo "X-windows installed."
 

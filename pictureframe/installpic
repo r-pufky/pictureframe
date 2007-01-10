@@ -32,10 +32,10 @@ echo "done."
 
 # Install required packages
 echo -e -n "Upgrading system to latest patches: "
-`apt-get -y update; apt-get -y upgrade`
+apt-get -y update; apt-get -y upgrade
 echo "done."
 echo -e -n "Installing packages required for pictureframe: "
-`apt-get -y install php4-cli xloadimage imagemagick unclutter`
+apt-get -y install php4-cli xloadimage imagemagick unclutter
 clear
 echo "Upgrading system to latest patches: done."
 echo -e -n "Disabling common X display managers: "
