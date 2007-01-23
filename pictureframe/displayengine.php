@@ -19,7 +19,7 @@ $setterm -powersave off > /dev/null 2>&1`;
 
 // put up the loading images screen and give convertengine some time to process the first picture
 `$xview -display localhost:0.0 -fork -fullscreen -normalize "/tmp/loading.png" > /dev/null 2>&1 &`;
-sleep($waittime);
+sleep(3);
 
 // continue indefinitely
 while( true ) {
