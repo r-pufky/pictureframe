@@ -35,9 +35,9 @@ echo -e -n "Upgrading system to latest patches: "
 apt-get -y update; apt-get -y upgrade
 echo "done."
 echo -e -n "Installing packages required for pictureframe: "
-apt-get -y install php4-cli xloadimage imagemagick unclutter
+apt-get -y install php4-cli xloadimage imagemagick unclutter rdate
 clear
-echo "Upgrading system to latest patches: done."
+echo "done."
 echo -e -n "Disabling common X display managers: "
 `rm -f /etc/rc?.d/???xdm > /dev/null 2>&1`
 `rm -f /etc/rc?.d/???gdm > /dev/null 2>&1`
@@ -48,6 +48,12 @@ echo "done."
 echo -e -n "Configuring php cli for pictureframe: "
 `sed -i.bak "s/max_execution_time\ =\ 30/max_execution_time\ =\ 0/g" /etc/php4/cli/php.ini`
 `sed -i "s/memory_limit\ =\ 8M/memory_limit\ =\ 100M/g" /etc/php4/cli/php.ini`
+echo "done."
+
+# Configure clockset cronjob (to keep time :))
+echo -e -n "Configuring NTP clock sync: "
+`echo "rdate -s time-a.nist.gov > /dev/null" > /etc/cron.hourly/clockset`
+`chmod 700 /etc/cron.hourly/clockset`
 echo "done."
 
 # Configure pictureframe to startup as a service

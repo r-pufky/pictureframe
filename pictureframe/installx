@@ -9,32 +9,53 @@ fi
 
 # Update, upgrade system
 clear
-echo -e -n "Updating system...
-\n\nThis will automatically update and patch your system
-to the latest files before installing X-windows.  This
-may take some time to complete.
-\n\nPlease Note: you can safely dis-reguard the 'Reboot now'
-prompt.  This is due to a kernel upgrade (and we will be 
-rebooting MANUALLY in a few minutes anyways).
-\n\nPress any key to continue, ctrl-c to quit"
+echo -e -n "Updating system...\n\n
+
+This will automatically update and 
+patch your system to the latest files 
+and install ssh for you.  It will also
+setup your apt configure without cdrom
+support.  You can re-enable cdrom 
+support afterwards by restoring
+/etc/apt/sources.list with
+/etc/apt/sources.list.bak\n\n
+
+This may take some time to complete.\n\n
+
+Press a key to continue, ctrl-c to quit"
 read
+echo "Removing cdrom configuration..."
+`sed -i.bak -e '/cdrom/ d' /etc/apt/sources.list`
+echo "done"
 apt-get -y update; apt-get -y upgrade
+echo -e -n "Installing ssh...\n\n
+apt-get -y install ssh
+echo "done."
+echo -e -n "Securing ssh..."
+`sed -i.bak -e "s/PermitRootLogin\ yes/PermitRootLogin\ no/g" /etc/ssh/sshd_config`
+/etc/init.d/ssh restart
 echo "done."
 
 # Install X-windows
 clear
-echo -e -n "Installing X-windows...
-\n\nThis step will download approximately 45 megs of files
-to install X-windows.  Time waiting for these files WILL
-vary based on your connection speeds.  Typically it is 
-about 5-10 minutes to download with reasonable (200-400kps)
-speeds.
-\n\nDuring the X-windows configuration, you should set the
-correct resolution of your display; otherwise, default
-values are fine.
-\n\nPress any key to continue, ctrl-c to quit"
+echo -e -n "Installing X-windows...\n\n
+
+This step will download approximately 
+45 megs of files to install X-windows.
+Time waiting for these files WILL vary
+based on your connection speeds.  
+Typically it is about 5-10 minutes to 
+download with reasonable (200-400kps)
+speeds.\n\n
+
+During the X-windows configuration, 
+you should set the correct resolution 
+of your display; otherwise, default 
+values are fine.\n\n
+
+Press a key to continue, ctrl-c to quit"
 read
-apt-get -y install xserver-xfree86 xfonts-100dpi xfonts-75dpi xfonts-base x-window-system gs gs-common gsfonts gsfonts-x11
+apt-get -y install xserver-xorg xfonts-100dpi xfonts-75dpi xfonts-base x-window-system gs gs-common gsfonts gsfonts-x11
 clear
 echo "X-windows installed."
 
