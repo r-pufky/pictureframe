@@ -23,12 +23,13 @@ support afterwards by restoring
 This may take some time to complete.\n\n
 
 Press a key to continue, ctrl-c to quit"
+
 read
-echo "Removing cdrom configuration..."
+echo -n "Removing cdrom configuration..."
 `sed -i.bak -e '/cdrom/ d' /etc/apt/sources.list`
-echo "done"
+echo "done."
 apt-get -y update; apt-get -y upgrade
-echo -e -n "Installing ssh...\n\n
+echo -e -n "Installing ssh..."
 apt-get -y install ssh
 echo "done."
 echo -e -n "Securing ssh..."

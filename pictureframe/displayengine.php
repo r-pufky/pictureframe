@@ -24,24 +24,29 @@ sleep(3);
 // continue indefinitely
 while( true ) {
   loadImages($images,$destination);
-  
-  // render each picture
-  foreach( $images as $image ) {
-    $image = "$destination/$image";
+ 
+  // prevent runaway case where there are no pictures
+  if( count($images) == 0 ) {
+    sleep($throttle);
+  } else {
+    // render each picture
+    foreach( $images as $image ) {
+      $image = "$destination/$image";
     
-    // load new image to be displayed, and fork the process
-    `$xview -display localhost:0.0 -fork -fullscreen -normalize "$image" > /dev/null 2>&1 &`;
-    sleep($waittime);
+      // load new image to be displayed, and fork the process
+      `$xview -display localhost:0.0 -fork -fullscreen -normalize "$image" > /dev/null 2>&1 &`;
+      sleep($waittime);
     
-    // remove "stale" images (not currently being displayed)
-    $pids = explode("\n",`$pgrep [x]view`);
-    array_pop($pids);
-    reset($pids);
+      // remove "stale" images (not currently being displayed)
+      $pids = explode("\n",`$pgrep [x]view`);
+      array_pop($pids);
+      reset($pids);
 
-    // remove old pictures, except for the new picture being displayed (has the highest pid)
-    for( $i=0; $i < count($pids)-1; $i++ ) {
-      exec("$kill -9 " . current($pids) . " > /dev/null 2>&1");
-      next($pids);
+      // remove old pictures, except for the new picture being displayed (has the highest pid)
+      for( $i=0; $i < count($pids)-1; $i++ ) {
+        exec("$kill -9 " . current($pids) . " > /dev/null 2>&1");
+        next($pids);
+      }
     }
   }
 }

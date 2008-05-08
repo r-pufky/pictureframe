@@ -1,15 +1,27 @@
 <?
+
 // Copyright 2002 - Robert M. Pufky
 // If you are not using the installer, be sure to 
 // disable the php execution time limit!
-
+//
+// Valid options are:
+// Boolean (T/F): 
+//   true  - yes I want this option
+//   false - no I don't want this option
+// Vertical Position:
+//   north - top of the screen
+//   south - bottom of the screen
+// Horizontal Position:
+//   west - left of the screen
+//   east - right of the screen
+//   ""   - (blank) center of the screen
 
 //-------------------------------------------------
 // Basics -  You should verify/set these!
 //-------------------------------------------------
-// the geometry to use (should be your X resolution)
-$geometry = "1024x768";
-// The background color (this should be the matte color of your frame)
+// the screen size to use - your X resolution
+$geometry = "1440x960";
+// The background color - the matte of your frame
 $background = "black";
 
 //-------------------------------------------------
@@ -17,7 +29,7 @@ $background = "black";
 //-------------------------------------------------
 // Seconds to wait between pictures being displayed
 $waittime = "5";
-// How long to wait after finishing conversion to check for new pictures
+// Minimum time (seconds) between scanning all pics
 $throttle = "10";
 
 //-------------------------------------------------
@@ -25,14 +37,11 @@ $throttle = "10";
 //-------------------------------------------------
 // The text color to use
 $textcolor = "white";
-// Show filenames with pictures?      (true OR false)
-//   Note: if this is turned off (false), options below do not apply
+// Show filenames with pictures?
 $showtext = true;
-// Where to vertically position text
-//   "north" = top, "south" = bottom
+// Vertical position
 $textpos = "south";
-// Where to align text
-//   "west = left, "east" = right, "" = center
+// Horizontal position
 $textalign = "west";
 // What font size to use?
 $textsize = 14;
@@ -40,11 +49,11 @@ $textsize = 14;
 //-------------------------------------------------
 // You shouldn't need to change anything below here
 //-------------------------------------------------
-// location of your original images
+// Original image location
 $source = "/usr/local/originals";
-// location of the modified images (seperate directory please!)
+// Modified image location (seperate directory!)
 $destination = "/usr/local/images";
-// conversion program to use
+// conversion programs to use
 $convert = "/usr/bin/convert";
 $composite = "/usr/bin/composite";
 
