@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright 2002 - Robert M. Pufky
+# Copyright 2002 - Robert Pufky
 # Daemon script for picture frame
 
 # starts the picture frame and all related services

@@ -1,6 +1,6 @@
 #!/usr/bin/php4 -q
 <?
-// Copyright 2002 - Robert M. Pufky
+// Copyright 2002 - Robert Pufky
 // Conversion engine for picture frame
 
 // load configuration settings

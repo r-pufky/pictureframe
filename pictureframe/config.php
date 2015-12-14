@@ -1,6 +1,6 @@
 <?
 
-// Copyright 2002 - Robert M. Pufky
+// Copyright 2002 - Robert Pufky
 // If you are not using the installer, be sure to 
 // disable the php execution time limit!
 //

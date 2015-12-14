@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright 2002 - Robert M. Pufky
+# Copyright 2002 - Robert Pufky
 # Configuration script for pictureframe
 
 # Verify we are running as root and can install things

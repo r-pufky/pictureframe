@@ -1,5 +1,5 @@
 Pictureframe 1.05
-Copyright 2002-2008 - Robert M. Pufky
+Copyright 2002-2008 - Robert Pufky
 
 
 
@@ -197,7 +197,7 @@ Legal Issues:
 -------------
 You may use this program for personal use only!  If you want to use any of the
 code provided herein for commerical use (i.e. you will make money from it) 
-please contact me at: robert.pufky@gmail.com Chances are I'll just let you use
+please contact me at: github.com/r-pufky Chances are I'll just let you use
 it, just ask!  If you ask after you've already done it, I won't be too happy 
 about it.
 
